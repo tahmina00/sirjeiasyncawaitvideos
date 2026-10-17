@@ -1,0 +1,91 @@
+ভিডিওটা ২৭ মিনিটের একটা JavaScript Loop-এর ক্লাস। এতে শব্দ আছে, কিন্তু কথা লেখায় রূপান্তর করার টুলটা এই পরিবেশে ডাউনলোড হলো না। তাই স্ক্রিনে যা দেখানো ও কোড করা হয়েছে, সেটা দেখে বিষয়গুলো সাজিয়ে দিলাম। শিক্ষক freeCodeCamp-এর একটা আর্টিকেল (“JavaScript Loops Explained”) আর GeeksforGeeks-এর ফ্লোচার্ট দেখিয়ে VS Code-এ কোড করে বুঝিয়েছেন।
+
+১. Loop কী?
+
+একই কাজ বারবার করার জন্য loop ব্যবহার হয়। একটা শর্ত (condition) থাকে, আর সেই শর্ত true থাকা পর্যন্ত loop চলতে থাকে। শর্ত false হলে loop থেমে যায়।
+
+২. for loop
+javascript
+for (initialization; condition; finalExpression) {
+  // code
+}
+initialization: শুরুতে একবার চলে, যেমন let i = 0
+condition: প্রতিবার loop চালানোর আগে যাচাই হয়
+finalExpression: প্রতিবার loop শেষে চলে, যেমন i++
+
+ফ্লোচার্টে দেখানো ক্রম: Start → Initialization → Condition check → (true হলে) Statement → Increment → আবার Condition check। Condition false হলে END।
+
+javascript
+for (let i = 0; i <= 10; i++) {
+  console.log(i);   // 0 থেকে 10 প্রিন্ট হয়
+}
+
+শিক্ষক শর্ত বদলে বদলে (i >= 10, i > 10 ইত্যাদি) দেখিয়েছেন আউটপুট কীভাবে পাল্টায়।
+
+৩. break আর continue
+javascript
+for (let i = 1; i <= 10; i++) {
+  if (i === 5) break;      // 1, 2, 3, 4 প্রিন্ট করে loop পুরো থেমে যায়
+  console.log(i);
+}
+javascript
+for (let i = 1; i <= 10; i++) {
+  if (i === 5) continue;   // শুধু 5 বাদ পড়ে, বাকি 1–10 প্রিন্ট হয়
+  console.log(i);
+}
+৪. Array-তে loop: একটা সাধারণ ভুল
+javascript
+const arr = [1, 2, 3];
+for (let i = 0; i <= arr.length; i++) {
+  console.log(arr[i]);   // 1, 2, 3, undefined
+}
+
+Array-র index 0 থেকে শুরু হয়, তাই শেষ index হলো length - 1। <= দিলে একটা বেশি ঘুরে যায় এবং undefined আসে। সমাধান হলো i < arr.length লেখা।
+
+৫. for...in loop (Object-এর জন্য)
+javascript
+const divisions = { b: "Barisal", c: "Chottogram", d: "Dhaka" };
+for (key in divisions) {
+  console.log(key);              // b, c, d
+  console.log(divisions[key]);   // Barisal, Chottogram, Dhaka
+}
+
+এখানে বাংলাদেশের বিভাগের নাম দিয়ে উদাহরণ দেওয়া হয়েছে।
+
+সতর্কতা: Array-তে for...in ব্যবহার না করাই ভালো। কেউ Array.prototype.someMethod = true লিখে দিলে loop-এ 0, 1, 2-এর সাথে someMethod-ও চলে আসে। এটা ভিডিওতে চালিয়ে দেখানো হয়েছে। নিয়মটা মনে রাখুন: for...in শুধু Object-এর জন্য।
+
+৬. for...of loop
+
+এটা Array, Set, Map-এর মান (value) একটা একটা করে দেয়:
+
+javascript
+for (let name of ["Fred", "Tom", "Bob"]) console.log(name);
+৭. while loop
+
+আগে শর্ত যাচাই হয়, তারপর কোড চলে:
+
+javascript
+let i = 0;
+while (i <= 10) {
+  console.log(i);
+  i++;            // এটা না দিলে loop কখনো থামবে না (infinite loop)
+}
+৮. do...while loop
+
+আগে কোড চলে, পরে শর্ত যাচাই হয়। তাই শর্ত শুরু থেকেই false হলেও কোড অন্তত একবার চলবে।
+
+javascript
+let i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i <= 10);
+এক নজরে
+Loop	কখন ব্যবহার করবেন
+for	কতবার ঘুরবে আগে থেকে জানা থাকলে
+for...in	Object-এর key ধরে ঘুরতে
+for...of	Array, Set বা Map-এর মান ধরে ঘুরতে
+while	শর্তের ওপর নির্ভর করে, কতবার ঘুরবে আগে থেকে জানা না থাকলে
+do...while	কোড অন্তত একবার চালাতেই হবে এমন হলে
+
+শিক্ষক মুখে বিশেষ কিছু বলেছেন কিনা জানতে চাইলে নির্দিষ্ট অংশটার সময় (যেমন ১০:০০–১২:০০) বলে দিন, সেই অংশ ধরে আবার চেষ্টা করব।
