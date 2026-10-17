@@ -1,0 +1,115 @@
+এটা ২১ মিনিটের “Function Part 1” ক্লাস। আগের ভিডিওর মতো এবারও কথা লেখায় রূপান্তর করা যায়নি, তাই স্ক্রিনের কোড আর আউটপুট দেখে ব্যাখ্যা করছি।
+
+১. Function কেন দরকার?
+
+শুরুতে একই লাইন বারবার লেখা হয়েছে:
+
+javascript
+console.log("hello World");
+console.log("hello World");
+console.log("hello World");
+
+একই কোড বারবার না লিখে একবার একটা function-এর ভেতরে রেখে দিলে যতবার দরকার ততবার ডাকা (call) যায়।
+
+২. Function Declaration
+javascript
+function greet() {
+  console.log("hello World");
+}
+greet();   // call করলে তবেই চলবে
+greet();
+function কীওয়ার্ড, তারপর নাম (greet), তারপর () আর { }
+শুধু function লিখে রাখলে কিছু হয় না। greet() লিখে call করতে হয়।
+৩. Parameter আর Argument
+javascript
+function greet(name) {             // name = parameter
+  console.log(`hello ${name}`);
+}
+greet("Rayan");    // hello Rayan      ← "Rayan" = argument
+greet("Wasim");    // hello Wasim
+greet();           // hello undefined  ← মান না দিলে undefined
+
+একই function-এ ভিন্ন ভিন্ন মান পাঠিয়ে ভিন্ন ফল পাওয়া যায়। `hello ${name}` হলো template literal, যা দিয়ে লেখার ভেতরে variable বসানো যায়।
+
+৪. Default Parameter
+javascript
+function greet(name = "World") {
+  console.log(`hello ${name}`);
+}
+greet();   // hello World  (undefined এর বদলে default মান)
+৫. Function Expression
+
+Function-কে একটা variable-এ রাখা:
+
+javascript
+const sum = function (a = 0, b = 0) {
+  console.log(a + b);
+};
+sum(2, 2);   // 4
+sum(4, 4);   // 8
+৬. return: সবচেয়ে গুরুত্বপূর্ণ অংশ
+javascript
+const total = sum(2, 2) + sum(4, 4);
+console.log(total);   // NaN  ❗
+
+কেন NaN এলো? console.log শুধু স্ক্রিনে দেখায়, কোনো মান ফেরত দেয় না। ফলে sum() ফেরত দেয় undefined, আর undefined + undefined = NaN (Not a Number)।
+
+সমাধান হলো return ব্যবহার করা:
+
+javascript
+const sum = function (a = 0, b = 0) {
+  console.log(a + b);
+  return a + b;
+};
+const total = sum(2, 2) + sum(4, 4);
+console.log(total);   // 12 ✅
+
+ভিডিওতে আরেকটা জিনিস দেখানো হয়েছে: return-এর পরে কিছু লিখলে সেটা আর চলে না, কারণ return হলেই function থেমে যায়। তাই console.log আগে, return পরে।
+
+৭. Arrow Function
+
+ছোট করে function লেখার আধুনিক উপায়:
+
+javascript
+const arrowSum = (a = 0, b = 0) => {
+  return a + b;
+};
+
+const square = x => x * x;    // parameter একটা আর এক লাইনের কাজ হলে
+                              // () আর {} আর return না লিখলেও চলে
+const square2 = () => 20;     // parameter না থাকলে () দিতে হয়
+৮. Callback Function
+
+একটা function-কে আরেকটা function-এর ভেতরে argument হিসেবে পাঠানো:
+
+javascript
+function greet(name, callback) {
+  console.log("hello " + name);
+  callback();             // পাঠানো function-টা এখানে চলবে
+}
+
+function done() {
+  console.log("Finished");
+}
+
+greet("Rayan", done);
+// hello Rayan
+// Finished
+
+খেয়াল করুন, পাঠানোর সময় done লিখতে হয়, done() নয়। () দিলে সাথে সাথেই চলে যাবে।
+
+শেষে আরেকটা উদাহরণ:
+
+javascript
+function test(fn) { fn(); }
+test(hello);
+এক নজরে
+ধরন	উদাহরণ
+Declaration	function greet() { }
+Expression	const sum = function () { }
+Arrow	const sum = (a, b) => a + b
+Callback	greet("Rayan", done)
+
+মূল শিক্ষা: console.log শুধু দেখায়, আর return মান ফেরত দেয়। মান দিয়ে পরে হিসাব করতে চাইলে return লাগবেই।
+
+কোনো অংশ পরিষ্কার না হলে বলুন, সেটা আরও উদাহরণ দিয়ে বুঝিয়ে দেব।
