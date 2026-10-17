@@ -1,7 +1,9 @@
-এই ভিডিওতে freeCodeCamp-এ Dillion Megida-র লেখা “What is Hoisting in JavaScript” আর্টিকেল পড়া হয়েছে, আর পাশাপাশি VS Code-এ code চালিয়ে দেখানো হয়েছে।
+এই ভিডিওতে freeCodeCamp-এ Dillion Megida-র লেখা “What is Hoisting in JavaScript” আর্টিকেল পড়া হয়েছে, 
+আর পাশাপাশি VS Code-এ code চালিয়ে দেখানো হয়েছে।
 
 ১. Hoisting কী (০:০০–১:০০)
-Function, variable বা class-এর declaration যে scope-এ লেখা হয়েছে, সেই scope-এর একদম উপরে উঠে যায়। এটাই hoisting। এটা JavaScript interpreter-এর একটা বিশেষ আচরণ।
+Function, variable বা class-এর declaration যে scope-এ লেখা হয়েছে, সেই scope-এর একদম উপরে উঠে যায়। 
+এটাই hoisting। এটা JavaScript interpreter-এর একটা বিশেষ আচরণ।
 
 ২. Function Hoisting (VS Code-এ, ~১:০০–৩:৩০)
 
