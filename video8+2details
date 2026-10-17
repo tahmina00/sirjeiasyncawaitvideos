@@ -1,0 +1,141 @@
+প্রতি ১৫ সেকেন্ডের স্ক্রিনশট দেখে ভিডিওর সব function নিচে দিলাম। প্রতিটা কোড আমি নিজে চালিয়ে দেখেছি, আউটপুট ভিডিওর সাথে মিলেছে।
+
+০. শুরুতে: আগের ক্লাসের Callback (রিভিশন)
+javascript
+const hello = function () {
+  console.log("Hello");
+};
+
+function test(fn) {
+  fn();
+}
+
+test(hello);   // Hello
+
+আপনার আগের প্রশ্নের উত্তর এখানেই আছে: hello আগে বানানো হয়েছিল (লাইন ২০–২২)।
+
+১. Recursive Function (নিজেকে নিজে ডাকে)
+
+ধাপ ১: সাধারণভাবে
+
+javascript
+function countdown(n) {
+  console.log(n);
+}
+countdown(3);
+countdown(2);
+countdown(1);
+
+ধাপ ২: loop দিয়ে
+
+javascript
+for (let index = 3; index >= 1; index--) {
+  countdown(index);   // 3, 2, 1
+}
+
+⚠️ ভিডিওতে index >= 0 আর index <= 3 দিয়ে ভুল করে দেখানো হয়েছে। শর্ত কখনো false না হলে loop অসীম চলে (-242244...), তখন Ctrl + C চেপে থামাতে হয়।
+
+ধাপ ৩: Recursion (loop ছাড়া)
+
+javascript
+function countdown(n) {
+  if (n === 0) {
+    return;            // থামার শর্ত (base case)
+  }
+  console.log(n);
+  countdown(n - 1);    // নিজেকে নিজে ডাকছে
+}
+countdown(3);          // 3, 2, 1
+
+⚠️ if (n === 0) return না দিলে function কখনো থামে না (-10304...)। Recursion-এ থামার শর্ত দিতেই হবে।
+
+২. IIFE (Immediately Invoked Function Expression)
+
+যে function বানানোর সাথে সাথেই নিজে থেকে চলে যায়, আলাদা করে call করতে হয় না।
+
+javascript
+// নাম ছাড়া function এভাবে লিখলে error আসে:
+// function () { ... }   ❌ Identifier expected
+
+(function (name) {
+  console.log("hello " + name);
+})("rayan");            // hello rayan
+
+// Arrow function দিয়ে IIFE
+;(() => {
+  console.log("hi");
+})();                   // hi
+পুরো function ( )-এর মধ্যে রেখে শেষে () দিলে সাথে সাথে চলে।
+দুটো IIFE পরপর লিখলে দ্বিতীয়টার শুরুতে ; দেওয়া হয়েছে, যাতে আগের লাইনের সাথে জোড়া না লাগে।
+৩. Method (Object-এর ভেতরের function)
+javascript
+const user = {
+  name: "Rayan",
+  greet: function () {
+    console.log("Hello " + this.name);
+  }
+};
+
+user.greet();   // Hello Rayan
+Object-এর ভেতরে থাকা function-কে method বলে।
+this মানে "এই object", তাই this.name = "Rayan"।
+৪. Constructor Function
+
+একই ছাঁচ দিয়ে অনেক object বানানোর জন্য।
+
+javascript
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const user1 = new User("rayan", 25);
+const user2 = new User("rayan2", 255);
+console.log(user1);   // User { name: 'rayan', age: 25 }
+console.log(user2);   // User { name: 'rayan2', age: 255 }
+নাম বড় হাতের অক্ষর দিয়ে শুরু হয় (User)। এটা রীতি।
+new দিয়ে call করতে হয়। new ছাড়া User("rayan") লিখলে object তৈরি হয় না।
+
+📝 ভিডিওতে user2-এর আউটপুটেও rayan, 25 দেখাচ্ছিল। সম্ভবত ফাইল save না করেই চালানো হয়েছিল। সঠিক আউটপুট উপরেরটা।
+
+৫. Generator Function (function*)
+
+সাধারণ function একবারে সব চালিয়ে শেষ করে। Generator থেমে থেমে একটা একটা মান দেয়।
+
+javascript
+// সাধারণ function: একবারে 1, 2, 3
+function count() {
+  console.log(1);
+  console.log(2);
+  console.log(3);
+}
+count();
+
+// Generator function
+function* numbers() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const gen = numbers();
+console.log(gen.next());   // { value: 1, done: false }
+console.log(gen.next());   // { value: 2, done: false }
+console.log(gen.next());   // { value: 3, done: false }
+console.log(gen.next());   // { value: undefined, done: true }
+function এর পরে * দিতে হয়।
+yield মানে "এই মানটা দিয়ে এখানে থামো"।
+প্রতিবার .next() ডাকলে পরের yield পর্যন্ত চলে।
+done: true মানে আর কোনো মান বাকি নেই।
+শুধু console.log(gen) লিখলে Object [Generator] {} আসে। মান পেতে .next() লাগে।
+Part 1 + Part 2: সব function এক নজরে
+#	ধরন	চেনার উপায়
+১	Declaration	function greet() {}
+২	Expression	const sum = function () {}
+৩	Arrow	const sum = () => {}
+৪	Callback	test(hello), function-কে argument হিসেবে পাঠানো
+৫	Recursive	function নিজেকেই ডাকে, countdown(n - 1)
+৬	IIFE	(function () {})(), সাথে সাথে চলে
+৭	Method	object-এর ভেতরে, user.greet()
+৮	Constructor	new User(...)
+৯	Generator	function* আর yield
