@@ -3,7 +3,8 @@
 ১. শুরু (০:০০–৩:০০): freeCodeCamp-এর আর্টিকেল
 Rwitesh Bera-র লেখা “How JavaScript Works Behind the Scenes” আর্টিকেলটি খোলা আছে।
 
-JavaScript একটা single-threaded interpreted language। প্রতিটা browser-এর নিজস্ব engine আছে, যেমন Chrome-এ V8 আর Firefox-এ SpiderMonkey।
+JavaScript একটা single-threaded interpreted language। 
+প্রতিটা browser-এর নিজস্ব engine আছে, যেমন Chrome-এ V8 আর Firefox-এ SpiderMonkey।
 এই উদাহরণ code দেখানো হয়:
 js
 var n = 5;
@@ -17,30 +18,35 @@ console.log(square1);
 console.log(square2);
 
 ২. Execution Context কী (~৪:৩০)
-JS engine যখন একটা script পড়ে, তখন একটা environment বানায়। এটাকেই বলে Execution Context। Parser তখন variable আর function-এর জন্য memory বরাদ্দ করে।
+JS engine যখন একটা script পড়ে, তখন একটা environment বানায়। এটাকেই বলে Execution Context। 
+Parser তখন variable আর function-এর জন্য memory বরাদ্দ করে।
 
 ৩. Excalidraw-এ আঁকা (~৪:৩০–৬:০০)
 
 বাম পাশে Stack memory আর ডান পাশে Heap memory (কয়েকটা বৃত্ত দিয়ে) আঁকা হয়েছে।
-তারপর একটা diagram: Execution Context → Global Context ও Functional Context। দুটোরই আবার দুটো ভাগ: Creation phase আর Execution phase।
+তারপর একটা diagram: Execution Context → Global Context ও Functional Context। 
+দুটোরই আবার দুটো ভাগ: Creation phase আর Execution phase।
 
 ৪. Creation Phase (~৭:৩০–৯:০০)
 
 একটা global object তৈরি হয় (browser-এ window, Node.js-এ global)।
 Variable আর function রাখার জন্য memory তৈরি হয়।
 Variable-এর মান হয় undefined, আর function-এর পুরো reference জমা থাকে।
-টেবিলে দেখানো হয়: MEMORY অংশে n: undefined, square: {...}, আর CODE অংশে বলা আছে code লাইন ধরে ধরে উপর থেকে নিচে চলে।
+টেবিলে দেখানো হয়: MEMORY অংশে n: undefined, square: {...}, 
+আর CODE অংশে বলা আছে code লাইন ধরে ধরে উপর থেকে নিচে চলে।
 
 ৫. Execution Phase (~১০:৩০–১৬:০০)
 
 n = 5 বসানো হয়।
-square(n) call হলে একটা নতুন function execution context তৈরি হয়। তার ভেতরেও memory অংশে n: undefined, ans: undefined থাকে।
+square(n) call হলে একটা নতুন function execution context তৈরি হয়।
+তার ভেতরেও memory অংশে n: undefined, ans: undefined থাকে।
 সব শেষ হলে global memory দাঁড়ায়: n: 5, square1: 25, square2: 64। এরপর global context-ও মুছে যায়।
 
 ৬. Call Stack (~১৬:৩০–২৭:০০)
 
 Call Stack-এর আরও কিছু নাম আছে: “Execution Context Stack”, “Runtime Stack”, “Machine Stack”।
-এটা LIFO (Last-In-First-Out) নিয়মে চলে। Function call হলে তার context stack-এর উপরে বসে, আর কাজ শেষ হলে বের হয়ে যায়।
+এটা LIFO (Last-In-First-Out) নিয়মে চলে। 
+Function call হলে তার context stack-এর উপরে বসে, আর কাজ শেষ হলে বের হয়ে যায়।
 এই উদাহরণ দেখানো হয়:
 js
 function funcA(m, n) { return m * n; }
@@ -50,6 +56,7 @@ var res = getResult(5, 6);
 console.log(res); // 30
 
 ৭. JavaScript Visualizer 9000 (~২২:৩০)
-উপরের code-টা এই tool-এ চালিয়ে দেখানো হয়। সেখানে Call Stack, Task Queue, Microtask Queue আর Event Loop দেখা যায়, আর Call Stack-এ getResult ঢুকছে।
+উপরের code-টা এই tool-এ চালিয়ে দেখানো হয়। সেখানে Call Stack, Task Queue, 
+Microtask Queue আর Event Loop দেখা যায়, আর Call Stack-এ getResult ঢুকছে।
 
 ৮. শেষ অংশ: আর্টিকেলের শুরুতে ফিরে গিয়ে পুরো বিষয়টা আবার ঝালাই করা হয়।
