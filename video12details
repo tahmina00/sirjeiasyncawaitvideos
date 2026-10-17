@@ -11,7 +11,8 @@ function printHello() {
   console.log("hello")
 }
 
-Function declare করার আগেই call করা হয়েছে, তবু output আসে hello, কোনো error হয় না। কারণ পুরো function-টাই (ভেতরের logic সহ) global scope-এর উপরে উঠে যায়।
+Function declare করার আগেই call করা হয়েছে, তবু output আসে hello, কোনো error হয় না। 
+কারণ পুরো function-টাই (ভেতরের logic সহ) global scope-এর উপরে উঠে যায়।
 
 ৩. ভেতরের (nested) function (~৩:৩০–৫:০০)
 
@@ -23,7 +24,9 @@ function printHello() {
   function printRayan() { console.log("Rayan") }
 }
 
-printRayan-ও hoist হয়, কিন্তু শুধু নিজের scope-এর (অর্থাৎ printHello-র ভেতরের) উপরে ওঠে। তাই বাইরে থেকে call করলে error আসে। পরে printRayan() call-টা printHello-র ভেতরে সরিয়ে নেওয়া হয়। তখন output আসে hello আর Rayan।
+printRayan-ও hoist হয়, কিন্তু শুধু নিজের scope-এর (অর্থাৎ printHello-র ভেতরের) উপরে ওঠে। 
+তাই বাইরে থেকে call করলে error আসে। পরে printRayan() call-টা printHello-র ভেতরে সরিয়ে নেওয়া হয়। 
+তখন output আসে hello আর Rayan।
 
 ৪. var Hoisting (~৫:৩০–৭:০০)
 
@@ -33,7 +36,8 @@ var name = "Dillion"
 
 Variable-এর declaration উপরে ওঠে, কিন্তু মান ওঠে না। তাই output undefined, কোনো error হয় না।
 
-আর্টিকেল থেকে আরও দেখানো হয়: যে variable কোথাও declare-ই করা হয়নি, তাকে access করলে আসে ReferenceError: name is not defined।
+আর্টিকেল থেকে আরও দেখানো হয়: যে variable কোথাও declare-ই করা হয়নি, 
+তাকে access করলে আসে ReferenceError: name is not defined।
 Function-এর ভেতরে var declare করলে সেটা শুধু ওই function-এর scope-এর উপরে ওঠে।
 
 ৫. let ও TDZ (~৭:৩০–৮:৩০)
