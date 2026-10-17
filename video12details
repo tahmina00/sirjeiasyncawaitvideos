@@ -1,0 +1,51 @@
+এই ভিডিওতে freeCodeCamp-এ Dillion Megida-র লেখা “What is Hoisting in JavaScript” আর্টিকেল পড়া হয়েছে, আর পাশাপাশি VS Code-এ code চালিয়ে দেখানো হয়েছে।
+
+১. Hoisting কী (০:০০–১:০০)
+Function, variable বা class-এর declaration যে scope-এ লেখা হয়েছে, সেই scope-এর একদম উপরে উঠে যায়। এটাই hoisting। এটা JavaScript interpreter-এর একটা বিশেষ আচরণ।
+
+২. Function Hoisting (VS Code-এ, ~১:০০–৩:৩০)
+
+js
+printHello()            // আগে call করা হয়েছে
+function printHello() {
+  console.log("hello")
+}
+
+Function declare করার আগেই call করা হয়েছে, তবু output আসে hello, কোনো error হয় না। কারণ পুরো function-টাই (ভেতরের logic সহ) global scope-এর উপরে উঠে যায়।
+
+৩. ভেতরের (nested) function (~৩:৩০–৫:০০)
+
+js
+printHello()
+printRayan()   // ReferenceError: printRayan is not defined
+function printHello() {
+  console.log("hello")
+  function printRayan() { console.log("Rayan") }
+}
+
+printRayan-ও hoist হয়, কিন্তু শুধু নিজের scope-এর (অর্থাৎ printHello-র ভেতরের) উপরে ওঠে। তাই বাইরে থেকে call করলে error আসে। পরে printRayan() call-টা printHello-র ভেতরে সরিয়ে নেওয়া হয়। তখন output আসে hello আর Rayan।
+
+৪. var Hoisting (~৫:৩০–৭:০০)
+
+js
+console.log(name)  // undefined
+var name = "Dillion"
+
+Variable-এর declaration উপরে ওঠে, কিন্তু মান ওঠে না। তাই output undefined, কোনো error হয় না।
+
+আর্টিকেল থেকে আরও দেখানো হয়: যে variable কোথাও declare-ই করা হয়নি, তাকে access করলে আসে ReferenceError: name is not defined।
+Function-এর ভেতরে var declare করলে সেটা শুধু ওই function-এর scope-এর উপরে ওঠে।
+
+৫. let ও TDZ (~৭:৩০–৮:৩০)
+
+js
+console.log(name)
+let name = "Dillion"
+// ReferenceError: Cannot access 'name' before initialization
+
+let/const-ও hoist হয়, কিন্তু initialize হওয়ার আগ পর্যন্ত এরা TDZ (Temporal Dead Zone)-এ থাকে। এই সময়ে access করলে error আসে। Code-এ //TDZ comment লিখে এটা চিহ্নিত করা হয়েছে।
+
+৬. Wrap Up (~৯:০০–শেষ)
+অনেক codebase-এ দেখা যায়, function1(), function2(), function3() উপরে call করা আছে আর function-গুলোর সংজ্ঞা নিচে লেখা। Hoisting-এর কারণেই এটা কাজ করে।
+
+আমার নেওয়া ছবিগুলোতে class hoisting-এর অংশটা পরিষ্কার আসেনি, শুধু একটা লাইন চোখে পড়েছে: class থেকে Dog object বানানো। ওই অংশ বিস্তারিত দেখতে চাইলে সেখানকার ফ্রেম বের করে দেখে বলতে পারি।
