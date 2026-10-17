@@ -1,0 +1,102 @@
+Class 7 – JS Control Flow (Part 1)
+Oct 2, 2026 · @tahmina
+Overview
+Control flow decides the order in which code runs. Control flow statements let a program make decisions, repeat tasks, and jump between parts of the code based on conditions.
+This class (14 min) covered the decision-making statements: if, if...else, if...else if...else, switch, and the ternary operator. Reference used in class: GeeksforGeeks – JavaScript Control Flow Statements. All code was written in script.js and run with node script.js.
+1. if statement
+Runs a block of code only when the condition is true. If the condition is false, the block is skipped.
+const age = 18;
+if (age >= 18) {
+    console.log("you are ready to go");
+}
+// Output: you are ready to go
+age >= 18 is true (18 is equal to 18), so the message prints.
+2. if...else
+Gives an alternate block to run when the condition is false. Exactly one of the two blocks always runs.
+// Online shop: free delivery on orders of 1000 taka or more
+const cartTotal = 850;
+let deliveryCharge;
+
+if (cartTotal >= 1000) {
+    deliveryCharge = 0;
+    console.log("You got free delivery!");
+} else {
+    deliveryCharge = 60;
+    const needed = 1000 - cartTotal;
+    console.log(`Add ${needed} taka more for free delivery`);
+}
+
+console.log(`Total to pay: ${cartTotal + deliveryCharge} taka`);
+// Output:
+// Add 150 taka more for free delivery
+// Total to pay: 910 taka
+850 >= 1000 is false, so the else block runs: it sets a 60 taka charge and works out how much more to spend. Change cartTotal to 1200 and the if block runs instead (free delivery, total 1200). Notice the block does real work, setting a value that code after the if...else uses, not just printing a message.
+3. if...else if...else
+Used to check several conditions in order. JavaScript tests them top to bottom and runs the first block whose condition is true; else catches everything left.
+const temp = 25;
+if (temp > 30) {
+    console.log("It is a hot day");
+} else if (temp >= 20) {
+    console.log("It is a warm day");
+} else {
+    console.log("It is cold day");
+}
+// Output: It is a warm day
+• 25 > 30 → false, move on
+• 25 >= 20 → true, print "It is a warm day" and stop checking
+• Order matters: put the most specific (highest) condition first.
+4. switch statement
+Compares one value against several case values and runs the matching block. It is a cleaner alternative to a long if...else if chain when you check one variable against fixed values.
+const day = "Monday";
+switch (day) {
+    case "Monday":
+        console.log("Start of the week.");
+        break;
+    case "Friday":
+        console.log("End of the week.");
+        break;
+    default:
+        console.log("It's a regular day.");
+}
+// Output: Start of the week.
+• case — a value to match against day (strict match, like ===)
+• break — exits the switch after a match
+• default — runs when no case matches (like else)
+Why break matters (demo from class): with the break lines removed, a match on "Monday" keeps running every block below it. This is called fall-through:
+// Same switch, but without break
+// Output:
+// Start of the week.
+// End of the week.
+// It's a regular day.
+5. Ternary (conditional) operator
+A one-line shortcut for a simple if...else that picks between two values.
+condition \; ? \; expression1 \; : \; expression2
+If the condition is true, it returns expression 1; otherwise expression 2.
+let a = 10;
+console.log(a === 5 ? "a is equal to 5" : "a is not equal to 5");
+// Output: a is not equal to 5
+a === 5 is a strict equality check; 10 is not 5, so the second string is returned.
+Quick reference and practice
+Statement
+Use it when
+Remember
+if
+One condition, do something only if true
+Nothing runs if false
+if...else
+Two outcomes
+One of the two always runs
+if...else if...else
+Several ranges or conditions
+First true condition wins; order matters
+switch
+One variable vs. fixed values
+Add break, or it falls through; default = else
+Ternary ? :
+Pick one of two values in one line
+Keep it short; use if for complex logic
+Uses of control flow: decision-making (if, else), branching (break, continue), looping (for, while, do...while — Part 2), and switching (switch).
+[ ] Write an if...else if...else that prints a grade (A/B/C/F) from a score
+[ ] Rewrite the day switch to handle all 7 days
+[ ] Remove one break and predict the output before running it
+[ ] Convert the score pass/fail check into a ternary
