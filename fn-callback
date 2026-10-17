@@ -1,0 +1,72 @@
+এই error আসছে কারণ hello নামে কোনো function আপনার কোডে বানানো হয়নি। JavaScript hello খুঁজে পাচ্ছে না, তাই বলছে “hello is not defined”।
+
+ভিডিওতে test(hello) লেখার আগে, ২০–২২ নম্বর লাইনে hello function বানানো ছিল। স্ক্রিনে শুধু শেষ অংশটা (console.log("hello") আর };) দেখা যাচ্ছিল, তাই হয়তো চোখ এড়িয়ে গেছে।
+
+সমাধান
+
+আগে hello বানান, তারপর test-এ পাঠান:
+
+javascript
+const hello = function () {
+  console.log("hello");
+};
+
+function test(fn) {
+  fn();
+}
+
+test(hello);   // আউটপুট: hello
+কী হচ্ছে, ধাপে ধাপে
+test(hello) চালালে hello function-টা fn নামে test-এর ভেতরে চলে যায়।
+test-এর ভেতরে fn() মানে আসলে hello() চালানো।
+ফলে hello প্রিন্ট হয়।
+খেয়াল রাখবেন
+const দিয়ে বানালে function-টা test(hello)-এর উপরে লিখতে হবে। নিচে লিখলে নতুন error আসবে: Cannot access 'hello' before initialization।
+function hello() { ... } (declaration) দিয়ে লিখলে নিচে রাখলেও চলবে, কারণ JavaScript declaration-কে আগে থেকেই চিনে নেয় (hoisting)।
+বানানের দিকে নজর দিন। Hello আর hello আলাদা নাম, কারণ JavaScript বড়-ছোট হাতের অক্ষর আলাদা ধরে।
+
+fn evabe call kora function er name ki ?
+
+এখানে দুটো আলাদা নাম আছে:
+
+১. Callback Function
+
+যে function-কে argument হিসেবে পাঠানো হয় আর পরে ভেতরে ডাকা হয়, তাকে বলে Callback Function।
+
+javascript
+const hello = function () {
+  console.log("hello");
+};
+
+test(hello);   // এখানে hello হলো callback function
+
+নামটা এসেছে “call back” থেকে, মানে "পরে ফিরে ডাকা"। আপনি function-টা দিয়ে রাখছেন, আর test তার কাজের মাঝে সুবিধামতো সময়ে সেটাকে ডাকছে।
+
+২. Higher-Order Function
+
+যে function আরেকটা function গ্রহণ করে (অথবা function ফেরত দেয়), তাকে বলে Higher-Order Function।
+
+javascript
+function test(fn) {   // test হলো higher-order function
+  fn();               // এখানে callback-টা call হচ্ছে
+}
+fn নিজে কী?
+
+fn শুধু একটা parameter-এর নাম। এর কোনো বিশেষ অর্থ নেই, যেকোনো নাম দিতে পারেন:
+
+javascript
+function test(callback) { callback(); }
+function test(kaj)      { kaj(); }
+
+তিনটাই একই কাজ করবে। fn বা callback নামগুলো সবাই ব্যবহার করে কারণ পড়লেই বোঝা যায় এখানে একটা function আসবে।
+
+বাস্তবে কোথায় দেখবেন
+
+আপনি অজান্তেই এগুলো অনেক জায়গায় ব্যবহার করবেন:
+
+javascript
+setTimeout(hello, 2000);              // ২ সেকেন্ড পরে hello চালাবে
+[1, 2, 3].forEach(n => console.log(n)); // প্রতিটা সংখ্যার জন্য function চালাবে
+button.addEventListener("click", hello); // ক্লিক করলে hello চালাবে
+
+এখানে setTimeout, forEach, addEventListener হলো higher-order function, আর যে function-গুলো পাঠানো হচ্ছে সেগুলো callback।
